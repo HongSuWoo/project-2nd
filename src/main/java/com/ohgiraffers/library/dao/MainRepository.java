@@ -3,7 +3,6 @@ package com.ohgiraffers.library.dao;
 import com.ohgiraffers.library.dto.BookDTO;
 import com.ohgiraffers.library.dto.MemberDTO;
 
-import java.awt.print.Book;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -35,26 +34,60 @@ public class MainRepository {
 
     // 도서 대출 메서드 --------------------------------------------------------------------------------------------------
     public int memberNameValid(String memberName) {
-        for (MemberDTO member : memberList) {
-            if (member.getMemberName().equals(memberName)) {
+        String query = props.getProperty("memberNameValid");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, memberName);
+            rset = pstmt.executeQuery();
+            if (rset.next()) {
+                MemberDTO member = new MemberDTO();
+                member.setMemberNum(rset.getInt("memberNum"));
+                memberList.add(member);
                 return member.getMemberNum();
+            } else {
+                return -1;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
         }
-        return -1;
     }
 
     public int bookNameValid(String bookName) {
-        for (BookDTO book : bookList) {
-            if (book.getBookName().equals(bookName)) {
+        String query = props.getProperty("bookNameValid");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, bookName);
+            rset = pstmt.executeQuery();
+            if (rset.next()) {
+                BookDTO book = new BookDTO();
+                book.setBookNum(rset.getInt("bookNum"));
+                bookList.add(book);
                 return book.getBookNum();
+            } else {
+                return -1;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
         }
-        return -1;
     }
 
     public String rentABook(int memberNum, int bookNum) {
         MemberDTO member = memberList.get(memberNum);
         BookDTO book = bookList.get(bookNum);
+        // memberDTO 대출시 입력해야하는것 memberName, memberNum
+        // 변경되야 하는것 memberRentalList
+        // bookDTO 대출시 입력해야하는것 bookNum, bookName
+        // 변경되야 하는것
         if (book.getBookStatus() != null) {
             return book.getBookStatus() + " 님이 대여중인 도서입니다.";
         }
@@ -378,7 +411,7 @@ public class MainRepository {
             close(pstmt);
             close(con);
         }
-        return bookList;
+        return memberList;
     }
 
     // 도서 반납 메서드 --------------------------------------------------------------------------------------------------

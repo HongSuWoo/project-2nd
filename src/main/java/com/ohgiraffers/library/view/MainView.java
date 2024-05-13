@@ -1,6 +1,5 @@
 package com.ohgiraffers.library.view;
 
-import com.ohgiraffers.library.dto.MemberDTO;
 import com.ohgiraffers.library.service.MainService;
 
 import java.util.InputMismatchException;

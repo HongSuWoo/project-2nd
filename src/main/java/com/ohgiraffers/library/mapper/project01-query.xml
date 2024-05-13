@@ -5,6 +5,20 @@
 
     <!-- 도서 대출 메서드 시작 -->
 
+    <entry key="memberNameValid">
+       SELECT
+       memberNum
+       FROM member
+       WHERE memberName = ? ;
+    </entry>
+
+    <entry key="bookNameValid">
+        SELECT
+        bookNum
+        FROM book
+        WHERE bookName = ? ;
+    </entry>
+
     <!-- 도서 관리 메서드 시작 -->
 
     <entry key="bookRegistration">

@@ -1,7 +1,5 @@
 package com.ohgiraffers.library.service;
 
-import com.ohgiraffers.library.dto.BookDTO;
-import com.ohgiraffers.library.dto.MemberDTO;
 import com.ohgiraffers.library.dao.MainRepository;
 
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class MainService {
     }
 
     public void registeredMemberList() {
-        System.out.println(mainRepository.registeredMemberList());
+        mainRepository.registeredMemberList();
     }
 
     /*
