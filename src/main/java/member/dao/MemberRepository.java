@@ -1,7 +1,6 @@
 package member.dao;
 
-import member.dto.MemberDTO;
-import member.dto.MemberInsertDTO;
+import member.dto.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -172,5 +171,139 @@ public class MemberRepository
         return result;
 
     }
+    public ArrayList bookRegistration(int bookQuantity, String[] bookName) {
+        String result = "";
+        ArrayList bookList = new ArrayList();
+        String query = pros.getProperty("bookRegistration");
+        con = getConnection();
+        try {
+            for (int i = 0; i < bookQuantity; i++) {
+                pstmt = con.prepareStatement(query);
+                pstmt.setString(1, bookName[i]);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    result = "도서가 성공적으로 등록되었습니다.";
+                } else {
+                    result = "도서등록에 실패 하였습니다.";
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            System.out.println(result);
+            close(rset);
+            close(pstmt);
+            close(con);
+        }
+        return bookList;
+    }
+
+    public ArrayList bookNameSearch(String bookName) {
+        ArrayList bookList = new ArrayList();
+        String query = pros.getProperty("bookNameSearch");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, bookName);
+            rset = pstmt.executeQuery();
+            while (rset.next()) {
+                BookDTO book = new BookDTO();
+                book.setBookNum(rset.getInt("bookNum"));
+                book.setBookName(rset.getString("bookName"));
+                book.setBookStatus(rset.getString("bookStatus"));
+                bookList.add(book);
+                System.out.println(book.toString());
+            }
+            if (bookList.isEmpty()) {
+                System.out.println("조회결과 없는 도서입니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
+        }
+        return bookList;
+    }
+
+    public ArrayList bookModify(String bookName, String newBookName) {
+        ArrayList bookList = new ArrayList();
+        int result = 0;
+        String query = pros.getProperty("bookModify");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, newBookName);
+            pstmt.setString(2, bookName);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("도서 이름이 성공적으로 수정되었습니다.");
+            } else {
+                System.out.println("도서 이름을 수정하는데 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
+        }
+        return bookList;
+    }
+
+    public ArrayList bookDelete(String bookName) {
+        ArrayList bookList = new ArrayList();
+        String query = pros.getProperty("bookDelete");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, bookName);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("도서의 상태가 성공적으로 수정되었습니다.");
+            } else {
+                System.out.println("도서의 상태를 수정하는데 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
+        }
+        return bookList;
+    }
+
+    public ArrayList registeredBookList() {
+        ArrayList bookList = new ArrayList();
+        String query = pros.getProperty("registeredBookList");
+        con = getConnection();
+        try {
+            pstmt = con.prepareStatement(query);
+            rset = pstmt.executeQuery();
+            while (rset.next()) {
+                BookDTO book = new BookDTO();
+                book.setBookNum(rset.getInt("bookNum"));
+                book.setBookName(rset.getString("bookName"));
+                book.setBookStatus(rset.getString("bookStatus"));
+                bookList.add(book);
+                System.out.println(book.toString());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+            close(con);
+        }
+        return bookList;
+    }
+
+
+
+
+
+
 }
 

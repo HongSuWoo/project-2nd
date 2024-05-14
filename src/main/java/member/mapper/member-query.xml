@@ -50,7 +50,41 @@ INSERT member
 ?
 )
     </entry>
+    <entry key="bookRegistration">
+        INSERT INTO book (bookName) VALUES (?)
+    </entry>
 
+    <entry key="bookNameSearch">
+        SELECT
+        bookNum ,
+        bookName ,
+        bookStatus
+        FROM book
+        WHERE bookName = ?
+        AND bookStatus = 'y'
+    </entry>
+
+    <entry key="bookModify">
+        UPDATE book
+        SET bookName = ?
+        WHERE bookName = ?
+
+    </entry>
+
+    <entry key="bookDelete">
+        UPDATE book
+        SET bookStatus = 'N'
+        WHERE bookName = ?
+    </entry>
+
+    <entry key="registeredBookList">
+        SELECT
+        bookNum ,
+        bookName ,
+        bookStatus
+        FROM book
+        WHERE bookStatus = 'y'
+    </entry>
 
 
 </properties>

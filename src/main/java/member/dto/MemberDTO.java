@@ -58,7 +58,6 @@ public class MemberDTO
                 "memberNum=" + memberNum +
                 ", memberName='" + memberName + '\'' +
                 ", memberRentList='" + memberRentList + '\'' +
-                ", memberStatus='" + memberStatus + '\'' +
                 '}'+"\n";
     }
 }
