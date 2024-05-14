@@ -28,7 +28,7 @@
         memberNum,
         memberName
         FROM member
-        WHERE memberName = ?
+        WHERE memberName = ? <!-- Statement일떄는 물음표사용불가 사용하려면 PreparedStatement를 쓰고 보안상 닫아줘야한다 -->
         AND memberStatus = 'y'
     </entry>
 

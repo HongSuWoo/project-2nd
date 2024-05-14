@@ -14,37 +14,37 @@ public class MemberService {
         this.MemberRepository = new MemberRepository();
     }
 
-    public ArrayList employeeViewAll() throws Exception {
-        ArrayList employees = MemberRepository.employeeViewAll();
+    public ArrayList memberViewAll() throws Exception {
+        ArrayList members = MemberRepository.memberViewAll();
 
-        if (employees == null) {
+        if (members == null) {
             throw new Exception("사원정보 조회실패");
         }
 
-        return employees;
+        return members;
     }
 
-    public MemberDTO employeeFindByName(String name) throws Exception {
+    public MemberDTO memberFindByName(String name) throws Exception {
 
         if (name == null && name.equals("")) {
             return null;
         }
-        MemberDTO emp = MemberRepository.employeeFindByName(name);
-        if (emp == null) {
+        MemberDTO member = MemberRepository.memberFindByName(name);
+        if (member == null) {
             throw new Exception("사원정보 조회실패");
         }
 
-        return emp;
+        return member;
     }
 
-    public String empInsert(MemberinsertDTO emp) throws Exception {
+    public String memberInsert(MemberinsertDTO member) throws Exception {
 
-        MemberDTO findEmp = MemberRepository.empFindById(emp.getMemberId());
+        MemberDTO findEmp = MemberRepository.memberFindById(member.getMemberId());
 
         if (findEmp != null) {
             throw new Exception("중복회원");
         }
-        int result = MemberRepository.empInsert(emp);
+        int result = MemberRepository.memberInsert(member);
 
         if (result < 0) {
             throw new Exception("등록실패");
@@ -52,10 +52,10 @@ public class MemberService {
         return (result > 0) ? "등록성공" : "등록실패";
     }
 
-    public MemberDTO empFindById(String index) {
-        MemberDTO findEmp = MemberRepository.empFindById(index);
-        if (findEmp != null) {
-            return findEmp;
+    public MemberDTO memberFindById(String index) {
+        MemberDTO findmember = MemberRepository.memberFindById(index);
+        if (findmember != null) {
+            return findmember;
         } else {
             return null;
 
@@ -64,15 +64,15 @@ public class MemberService {
 
     }
 
-    public MemberDTO empModify(String name, String index)throws Exception {
+    public MemberDTO memberModify(String name, String index)throws Exception {
         if(name.equals("") || name == null){
             throw new Exception("반값 입력");
         }
-        int result = MemberRepository.empModify(name,index);
+        int result = MemberRepository.memberModify(name,index);
         if (result < 0) {
             throw new Exception("변경실패");
         }
-        MemberDTO modifyEmp = MemberRepository.empFindById(index);
+        MemberDTO modifyEmp = MemberRepository.memberFindById(index);
 
         return modifyEmp;
     }
