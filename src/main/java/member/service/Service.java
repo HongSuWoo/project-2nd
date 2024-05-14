@@ -78,13 +78,10 @@ public class Service {
             return modifyMember;
         }
 
-    public MemberDTO memeberDelete(String name, String index) throws Exception
+    public MemberDTO memeberDelete(String index) throws Exception
     {
-        if(name.equals("") || name == null){
-            throw new Exception("빈값 입력");
-        }
 
-        int result = memberRepository.memberDelete(name,index);
+        int result = memberRepository.memberDelete(index);
         if(result < 0){
             throw new Exception("변경실패");
         }

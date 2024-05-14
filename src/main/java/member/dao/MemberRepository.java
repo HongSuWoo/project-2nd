@@ -151,15 +151,14 @@ public class MemberRepository
 
     }
 
-    public int memberDelete(String name, String index)
+    public int memberDelete(String index)
     {
         String query = pros.getProperty("memberDelete");
         con = getConnection();
         int result = 0;
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, name);
-            pstmt.setString(2, index);
+            pstmt.setString(1, index);
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

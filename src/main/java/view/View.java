@@ -97,7 +97,7 @@ public class View {
     {
 
             Scanner sc = new Scanner(System.in);
-            System.out.println("삭제할 회원을 입력하세요");
+            System.out.println("삭제할 회원 번호를 입력하세요");
             String index = sc.nextLine();
             MemberDTO member = service.memberFindById(index);
 
@@ -106,10 +106,9 @@ public class View {
                 return;
             }
             System.out.println(member);
-            System.out.println("삭제할 이름을 입력해주세요");
-            String name = sc.nextLine();
+
             try {
-                MemberDTO modifyMember = service.memeberDelete(name, index);
+                MemberDTO modifyMember = service.memeberDelete( index);
                 System.out.println(modifyMember);
             } catch (Exception e) {
                 throw new RuntimeException(e);
